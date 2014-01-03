@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import logging
 import re
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryFile
 from hashlib import md5
 
 from django.conf import settings
@@ -125,11 +125,10 @@ def generate(generator):
     # If the file doesn't have a name, Django will raise an Exception while
     # trying to save it, so we create a named temporary file.
     if not getattr(content, 'name', None):
-        f = NamedTemporaryFile()
+        f = TemporaryFile()
         f.write(content.read())
         f.seek(0)
         content = f
-
     return File(content)
 
 
